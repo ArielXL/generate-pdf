@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{4F78BF0B-9293-4BEE-AE99-300012F9830C}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Tramos.Report/Pdf/Factories/RequalificationCertificationFactory.cs">
+    <Files>
+      <File FileName="../Tramos.Report/Pdf/Factories/RequalificationCertificationFactory.cs" Line="6" Column="31" />
+      <File FileName="../Tramos.Report.Console/Program.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="PdfTesting" expanded="True">
+            <Node name="Tramos.Report" expanded="True">
+              <Node name="Pdf" expanded="True">
+                <Node name="Factories" expanded="True">
+                  <Node name="RequalificationCertificationFactory.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="Tramos.Report.Test" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Tramos.Report.Test PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

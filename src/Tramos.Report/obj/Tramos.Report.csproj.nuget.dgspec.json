@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report/Tramos.Report.csproj": {}
+  },
+  "projects": {
+    "/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report/Tramos.Report.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report/Tramos.Report.csproj",
+        "projectName": "Tramos.Report",
+        "projectPath": "/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report/Tramos.Report.csproj",
+        "packagesPath": "/home/arielito/.nuget/packages/",
+        "outputPath": "/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/arielito/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "itext7": {
+              "target": "Package",
+              "version": "[7.1.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/arielito/dotnet/sdk/3.1.414/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

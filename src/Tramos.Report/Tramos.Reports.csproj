@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Tramos.Reports</AssemblyName>
+    <RootNamespace>Tramos.Reports</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AssemblyResources\escudo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="AssemblyResources\escudo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="itext7" Version="7.1.16" />
+  </ItemGroup>
+
+</Project>

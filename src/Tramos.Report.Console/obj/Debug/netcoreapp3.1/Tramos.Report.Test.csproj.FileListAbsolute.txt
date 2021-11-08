@@ -1,0 +1,64 @@
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Pdf/AssemblyResources/escudo.png
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.deps.json
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.runtimeconfig.json
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.runtimeconfig.dev.json
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.pdb
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Common.Logging.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Common.Logging.Core.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.barcodes.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.forms.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.io.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.kernel.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.layout.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.pdfa.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.sign.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.styledxmlparser.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.svg.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Microsoft.DotNet.PlatformAbstractions.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyModel.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.pdb
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csprojAssemblyReference.cache
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.AssemblyInfoInputs.cache
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.AssemblyInfo.cs
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csproj.CoreCompileInputs.cache
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csproj.CopyComplete
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.dll
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.pdb
+/media/arielito/Datos/Pincha/Generate PDF/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.genruntimeconfig.cache
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Pdf/AssemblyResources/escudo.png
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.deps.json
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.runtimeconfig.json
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.runtimeconfig.dev.json
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.Test.pdb
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Common.Logging.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Common.Logging.Core.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.barcodes.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.forms.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.io.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.kernel.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.layout.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.pdfa.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.sign.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.styledxmlparser.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/itext.svg.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Microsoft.DotNet.PlatformAbstractions.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyModel.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/bin/Debug/netcoreapp3.1/Tramos.Report.pdb
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csprojAssemblyReference.cache
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.AssemblyInfoInputs.cache
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.AssemblyInfo.cs
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csproj.CoreCompileInputs.cache
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.csproj.CopyComplete
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.dll
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.pdb
+/home/arielito/Documentos/GitHub/generate-pdf/src/Tramos.Report.Console/obj/Debug/netcoreapp3.1/Tramos.Report.Test.genruntimeconfig.cache
