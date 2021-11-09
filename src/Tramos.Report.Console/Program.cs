@@ -28,24 +28,24 @@ namespace Tramos.Report.Test
             Console.WriteLine("potential assessment pdf done!!!");
         }
 
-        private static void GeneratePDFFirstCertificate(string path)
+        private static void GeneratePDFTheoricalCourseCertificate(string path)
         {
             FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
-            var bytes = new FirstCertificateSummaryFactory().Create(GetItemDynamics()).Result;
+            var bytes = new TheoricalCourseCertificateSummaryFactory().Create(GetItemDynamics()).Result;
 
             fileStream.Write(bytes, 0, bytes.Length);
             fileStream.Close();
-            Console.WriteLine("first certificate pdf done!!!");
+            Console.WriteLine("theorical course certificate pdf done!!!");
         }
 
-        private static void GeneratePDFSecondCertificate(string path)
+        private static void GeneratePDFRequalificationCourseCertificate(string path)
         {
             FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
-            var bytes = new SecondCertificateSummaryFactory().Create(GetItemDynamics()).Result;
+            var bytes = new RequalificationCourseCertificateSummaryFactory().Create(GetItemDynamics()).Result;
 
             fileStream.Write(bytes, 0, bytes.Length);
             fileStream.Close();
-            Console.WriteLine("second certificate pdf done!!!");
+            Console.WriteLine("requalification course certificate pdf done!!!");
         }
 
         private static List<Certificate> GetItemDynamics()
@@ -84,7 +84,7 @@ namespace Tramos.Report.Test
                     Points = "70",
                     ExpirationDateEEVC = DateTime.Now,
                     RecalificationCode = "1234567890",
-                    Examiner = "Miguel Diaz Canel Bermudez",
+                    Examiner = "Mmmmmmmmmmmiguel Diaz Canel Bermudez",
                     ExperimentationNumber = "45",
                     MunicipalClassroom = "45",
                     ValidDate = DateTime.Now,
@@ -131,10 +131,10 @@ namespace Tramos.Report.Test
 
         static void Main(string[] args)
         {
-            GeneratePDFRequalificationCertification("../../pdf/Certificado de Recalificacion.pdf");
+            GeneratePDFRequalificationCertification("../../pdf/Carnet.pdf");
             GeneratePDFPotentialAssessment("../../pdf/Resumen de Evaluacion.pdf");
-            GeneratePDFFirstCertificate("../../pdf/Primer Certificado.pdf");
-            GeneratePDFSecondCertificate("../../pdf/Segundo Certificado.pdf");
+            GeneratePDFTheoricalCourseCertificate("../../pdf/Certificado del Curso Teorico.pdf");
+            GeneratePDFRequalificationCourseCertificate("../../pdf/Certificado del Curso de Recalificacion.pdf");
         }
     }
 }

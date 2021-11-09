@@ -82,73 +82,12 @@ namespace Tramos.Report.Pdf.Utils
             {
                 separator += " ";
             }
-            System.Console.WriteLine($"sep - {separation} , {separator.Length}");
             paragraph.Add(new Text(separator));
 
             var text2 = isUpperText ? texts[1].ToUpper() : texts[1];
             paragraph.Add(new Text($"{text2}")).SetFont(font);
             var t2 = isUpperValue ? values[1].ToUpper() : values[1];
             paragraph.Add(new Text(t2).SetFont(fontBold).SetItalic().SetUnderline());
-
-            return paragraph;
-        }
-
-        public static Paragraph GetParagraphWithSeparation1(List<string> texts, List<string> values, bool isUpperText, bool isUpperValue, int separation, PdfFont font, PdfFont fontBold, float fontSize, TextAlignment textAlignment)
-        {
-            var paragraph = ParagraphFactory.CreateEmpty(fontBold, fontSize, 1, textAlignment);
-
-            var text1 = isUpperText ? texts[0].ToUpper() : texts[0];
-            paragraph.Add(new Text($"{text1}")).SetFont(font);
-            var t1 = isUpperValue ? values[0].ToUpper() : values[0];
-            paragraph.Add(new Text(t1).SetFont(fontBold).SetItalic().SetUnderline());
-
-            var separator = string.Empty;
-            for (int i = 0; i < separation; i++)
-            {
-                separator += " ";
-            }
-            paragraph.Add(new Text(separator));
-
-            var text2 = isUpperText ? texts[1].ToUpper() : texts[1];
-            paragraph.Add(new Text($"{text2}")).SetFont(font);
-            var t2 = isUpperValue ? values[1].ToUpper() : values[1];
-            paragraph.Add(new Text(t2).SetFont(fontBold).SetItalic().SetUnderline());
-
-            return paragraph;
-        }
-
-        public static Paragraph GetParagraphWithSeparationForThree(List<string> texts, List<string> values, bool isUpperText, bool isUpperValue, int separation1, int separation2, PdfFont font, PdfFont fontBold, float fontSize, TextAlignment textAlignment)
-        {
-            var paragraph = ParagraphFactory.CreateEmpty(fontBold, fontSize, 1, textAlignment);
-
-            var text1 = isUpperText ? texts[0].ToUpper() : texts[0];
-            paragraph.Add(new Text($"{text1}")).SetFont(font);
-            var t1 = isUpperValue ? values[0].ToUpper() : values[0];
-            paragraph.Add(new Text(t1).SetFont(fontBold).SetItalic().SetUnderline());
-
-            var separator11 = string.Empty;
-            for (int i = 0; i < separation1; i++)
-            {
-                separator11 += " ";
-            }
-            paragraph.Add(new Text(separator11));
-
-            var text2 = isUpperText ? texts[1].ToUpper() : texts[1];
-            paragraph.Add(new Text($"{text2}")).SetFont(font);
-            var t2 = isUpperValue ? values[1].ToUpper() : values[1];
-            paragraph.Add(new Text(t2).SetFont(fontBold).SetItalic().SetUnderline());
-
-            var separator22 = string.Empty;
-            for (int i = 0; i < separation2; i++)
-            {
-                separator22 += " ";
-            }
-            paragraph.Add(new Text(separator22));
-
-            var text3 = isUpperText ? texts[2].ToUpper() : texts[2];
-            paragraph.Add(new Text($"{text3}")).SetFont(font);
-            var t3 = isUpperValue ? values[2].ToUpper() : values[2];
-            paragraph.Add(new Text(t3).SetFont(fontBold).SetItalic().SetUnderline());
 
             return paragraph;
         }
@@ -158,7 +97,7 @@ namespace Tramos.Report.Pdf.Utils
             var paragraph = ParagraphFactory.CreateEmpty(fontBold, fontSize, 1, textAlignment);
             text = isUpperText ? text.ToUpper() : text;
             paragraph.Add(
-                new Text($"{text}  "))
+                new Text($"{text} "))
                 .SetFont(font);
 
             value = isUpperValue ? value.ToUpper() : value;

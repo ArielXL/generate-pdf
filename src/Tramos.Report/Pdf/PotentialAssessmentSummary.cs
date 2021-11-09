@@ -49,17 +49,14 @@ namespace Tramos.Report.Pdf
             _pdfWriter = new PdfWriterManager(stream, PageSize.LETTER.Rotate());
 
             List<Certificate> certificatesList = certificates.ToList();
-            GenerateReportFirstPage(certificatesList[0]);
-            _pdfWriter.AddNewPage();
-            GenerateReportFirstPage(certificatesList[1]);
-            // for(int i = 0; i < certificatesList.Count; i++)
-            // {
-            //     GenerateReportFirstPage(certificatesList[i]);
-            //     _pdfWriter.AddNewPage();
-            //     // GenerateReportSecondPage(certificatesList[i]);
-            //     if(i != certificatesList.Count - 1)
-            //         _pdfWriter.AddNewPage();
-            // }
+            for(int i = 0; i < certificatesList.Count; i++)
+            {
+                GenerateReportFirstPage(certificatesList[i]);
+                _pdfWriter.AddNewPage();
+                GenerateReportSecondPage(certificatesList[i]);
+                if(i != certificatesList.Count - 1)
+                    _pdfWriter.AddNewPage();
+            }
 
             _pdfWriter.Close();
         }
@@ -73,7 +70,7 @@ namespace Tramos.Report.Pdf
                rectangleBottom: heightBorder,
                lineWidth: 3);
 
-            WriteImages(left + 5, bottom + 340, 50);
+            WriteImages(left + 5, bottom + 335, 50);
 
             WriteHeadersFirstPage(certificate);
 
@@ -241,28 +238,28 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> secondParagraph = GetEvaluationInfoSecondParagraph();
 
             ReportHelper.WriteDataTable(_pdfWriter, secondParagraph,
-              columns: 1,
+              columns: 2,
               x: left + 20,
               y: bottom + heightBorder - 240,
               width: widthBorder - 40);
 
             IEnumerable<Paragraph> GetEvaluationInfoSecondParagraph()
             {
-                // revisar esto
-                // Console.WriteLine($"x = {left + 20} , y = {bottom + heightBorder - 240}");
-                // Console.WriteLine($"{left + 20 + ConstantText.EvaluationTypeText.Length + certificate.EvaluationType.Length}");
-                int start = 150;
-                // Console.WriteLine($"start = {start}");
-                int separation = start - ((int)left + 20 + ConstantText.EvaluationTypeText.Length + certificate.EvaluationType.Length);
-                // Console.WriteLine($"sep = {separation}");
-                List<string> texts = new List<string>() { ConstantText.EvaluationTypeText, ConstantText.NextEvaluationText };
-                List<string> values = new List<string>() { certificate.EvaluationType, certificate.NextEvaluation };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.EvaluationTypeText, 
+                    certificate.EvaluationType, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation1(
-                    texts, values, false, false, separation,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.NextEvaluationText, 
+                    certificate.NextEvaluation, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
             }
         }
 
@@ -271,27 +268,42 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> firstLine = GePersonalInfoFirstLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, firstLine,
-              columns: 1,
+              columns: 3,
               x: left + 20,
               y: bottom + heightBorder - 285,
               width: widthBorder - 40);
 
             IEnumerable<Paragraph> GePersonalInfoFirstLine()
             {
-                List<string> texts = new List<string>() { ConstantText.NumberNumberplateText, ConstantText.TomeText, ConstantText.MyFolioText };
-                List<string> values = new List<string>() { certificate.NumberNumberplate, certificate.Tomo, certificate.Folio };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.NumberNumberplateText, 
+                    certificate.NumberNumberplate, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparationForThree(
-                    texts, values, false, false, 50, 50, 
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.TomeText, 
+                    certificate.Tomo, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
+
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.FolioText, 
+                    certificate.Folio, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> secondLine = GePersonalInfoSecondLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, secondLine,
-              columns: 1,
+              columns: 2,
               x: left + 20,
               y: bottom + heightBorder - 310,
               width: widthBorder - 40);
@@ -299,54 +311,72 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> GePersonalInfoSecondLine()
             {
                 string fullName = $"{certificate.Name} {certificate.FirstLastName} {certificate.SecondLastName}";
-                List<string> texts = new List<string>() { ConstantText.NameLastNameStudentText, ConstantText.AgeText };
-                List<string> values = new List<string>() { fullName, certificate.Age };
+                
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.NameLastNameStudentText, fullName, 
+                    false, false, FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.AgeText, certificate.Age, 
+                    false, false, FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, TextAlignment.CENTER
+                );
             }
 
             IEnumerable<Paragraph> thirdLine = GePersonalInfoThirdLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, thirdLine,
-              columns: 1,
+              columns: 2,
               x: left + 20,
               y: bottom + heightBorder - 335,
               width: widthBorder - 40);
 
             IEnumerable<Paragraph> GePersonalInfoThirdLine()
             {
-                List<string> texts = new List<string>() { ConstantText.IdentityCardText, ConstantText.DrivingLicenseText };
-                List<string> values = new List<string>() { certificate.IdentityCard, certificate.CardDriver };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.IdentificationNumberText, 
+                    certificate.IdentityCard, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.DrivingLicenseText, 
+                    certificate.CardDriver, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> fourthLine = GePersonalInfoFourthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
-              columns: 1,
+              columns: 2,
               x: left + 20,
               y: bottom + heightBorder - 360,
               width: widthBorder - 40);
 
             IEnumerable<Paragraph> GePersonalInfoFourthLine()
             {
-                List<string> texts = new List<string>() { ConstantText.WorkCenterText, ConstantText.DrivingVehicleText };
-                List<string> values = new List<string>() { certificate.WorkCenter, certificate.DrivingVehicle };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.WorkCenterText, 
+                    certificate.WorkCenter, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 30,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.DrivingVehicleText, 
+                    certificate.DrivingVehicle, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
         }
 

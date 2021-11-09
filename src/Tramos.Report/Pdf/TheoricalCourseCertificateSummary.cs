@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Tramos.Report.Pdf
 {
-    internal class FirstCertificateSummary
+    internal class TheoricalCourseCertificateSummary
     {
         private const float heightBorder = 350;
         private const float widthBorder = 700;
@@ -248,14 +248,21 @@ namespace Tramos.Report.Pdf
 
             IEnumerable<Paragraph> GetSecondLine()
             {
-                List<string> texts = new List<string>() { ConstantText.DateText, ConstantText.PtosText };
-                List<string> values = new List<string>() { certificate.Date.ToString("dd/MM/yy"), certificate.Ptos };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.DateText, 
+                    certificate.Date.ToString("dd/MM/yy"), false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.PtosText, 
+                    certificate.Ptos, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
         }
 
@@ -362,14 +369,21 @@ namespace Tramos.Report.Pdf
 
             IEnumerable<Paragraph> GetFirstLine()
             {
-                List<string> texts = new List<string>() { ConstantText.NumberNumberplateText, ConstantText.GroupText };
-                List<string> values = new List<string>() { certificate.NumberNumberplate, certificate.Group };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.NumberNumberplateText, 
+                    certificate.NumberNumberplate, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.GroupText, 
+                    certificate.Group, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> secondLine = GePersonalInfoSecondLine();
@@ -391,41 +405,63 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> thirdLine = GetThirdLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, thirdLine,
-              columns: 1,
+              columns: 2,
               x: left + 20,
               y: bottom + heightBorder - 235,
               width: widthBorder - 30);
 
             IEnumerable<Paragraph> GetThirdLine()
             {
-                List<string> texts = new List<string>() { ConstantText.IdentityCardText, ConstantText.HashtagDrivingLicenseText };
-                List<string> values = new List<string>() { certificate.IdentityCard, certificate.CardDriver };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.IdentityCardText, 
+                    certificate.IdentityCard, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.HashtagDrivingLicenseText, 
+                    certificate.CardDriver, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> fourthLine = GetFourthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
-              columns: 1,
+              columns: 3,
               x: left + 20,
               y: bottom + heightBorder - 255,
               width: widthBorder - 30);
 
             IEnumerable<Paragraph> GetFourthLine()
             {
-                List<string> texts = new List<string>() { ConstantText.TomeText, ConstantText.FolioText, ConstantText.BookText };
-                List<string> values = new List<string>() { certificate.Tomo, certificate.Folio, certificate.Book };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.TomeText, 
+                    certificate.Tomo, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparationForThree(
-                    texts, values, false, false, 50, 50, 
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.FolioText, 
+                    certificate.Folio, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
+
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.BookText, 
+                    certificate.Book, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> fifthLine = GetFifthLine();

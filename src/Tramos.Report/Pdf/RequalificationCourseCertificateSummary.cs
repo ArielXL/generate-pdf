@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Tramos.Report.Pdf
 {
-    internal class SecondCertificateSummary
+    internal class RequalificationCourseCertificateSummary
     {
         private const float heightBorder = 350;
         private const float widthBorder = 700;
@@ -222,45 +222,59 @@ namespace Tramos.Report.Pdf
 
             IEnumerable<Paragraph> GetSecondLine()
             {
-                List<string> texts = new List<string>() { ConstantText.DateText, ConstantText.PointsText };
-                List<string> values = new List<string>() { certificate.Date.ToString("dd/MM/yy"), certificate.Points };
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.DateText, 
+                    certificate.Date.ToString("dd/MM/yy"), false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
 
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50,
-                    FontFactory.CreateFontBoldText(),
-                    FontFactory.CreateFontBoldText(),
-                    10, TextAlignment.LEFT);
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.PointsText, 
+                    certificate.Points, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
             }
 
             IEnumerable<Paragraph> thirdLine = GetThirdLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, thirdLine,
-              columns: 1,
+              columns: 2,
               x: left + 30,
               y: bottom + heightBorder - 303,
               width: widthBorder - 60);
 
             IEnumerable<Paragraph> GetThirdLine()
             {
-                List<string> texts = new List<string>() { ConstantText.ExaminerText, ConstantText.EEVCText, ConstantText.TCPText };
-                List<string> values = new List<string>() { certificate.Examiner, "", "" };
-                
-                yield return ReportHelper.GetParagraphWithSeparationForThree(
-                    texts, values, false, false, 58, 32, 
-                    FontFactory.CreateFontBoldText(), 
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.ExaminerText, certificate.Examiner, false, 
+                    false, FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
                 );
 
+                List<string> texts = new List<string>() { ConstantText.EEVCText, ConstantText.TCPText };
+                List<string> values = new List<string>() { "", "" };
+
+                yield return ReportHelper.GetParagraphWithSeparation(
+                    texts, values, false, false, 30, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.CENTER
+                );
+
                 WriteBorders(
-                    rectangleLeft: left + 465,
+                    rectangleLeft: left + 475,
                     rectangleTop: bottom + heightBorder - 299,
                     rectangleRight: widthBorder - 690,
                     rectangleBottom: 10,
                     lineWidth: 1);
-
+                
                 WriteBorders(
-                    rectangleLeft: left + 583,
+                    rectangleLeft: left + 586,
                     rectangleTop: bottom + heightBorder - 299,
                     rectangleRight: widthBorder - 690,
                     rectangleBottom: 10,
@@ -269,9 +283,10 @@ namespace Tramos.Report.Pdf
 
             IEnumerable<Paragraph> fourthLine = GetFourthLine();
 
+            int start = (certificate.Examiner.Length - ConstantText.IdentificationNumberText.Length) / 2;
             ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
               columns: 1,
-              x: left + 123,
+              x: (float)(left + 93 + (9.5 * start)),
               y: bottom + heightBorder - 315,
               width: widthBorder - 60);
 
@@ -378,21 +393,27 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> fourthLine = GetFourthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
-              columns: 1,
+              columns: 2,
               x: left + 30,
               y: bottom + heightBorder - 140,
               width: widthBorder - 60);
 
             IEnumerable<Paragraph> GetFourthLine()
             {
-                List<string> texts = new List<string>() { ConstantText.ProvincialEEVCText, ConstantText.MunicipalClassroomText };
-                List<string> values = new List<string>() { certificate.ProvincialEEVC, certificate.MunicipalClassroom };
-                
-                yield return ReportHelper.GetParagraphWithSeparation(
-                    texts, values, false, false, 50, 
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.ProvincialEEVCText, 
+                    certificate.ProvincialEEVC, false, false, 
                     FontFactory.CreateFontBoldText(), 
-                    FontFactory.CreateFontBoldText(), 10, 
-                    TextAlignment.LEFT
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
+
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.MunicipalClassroomText, 
+                    certificate.MunicipalClassroom, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
                 );
             }
 
@@ -458,18 +479,32 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> eighthLine = GetEighthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, eighthLine,
-              columns: 1,
+              columns: 3,
               x: left + 30,
               y: bottom + heightBorder - 220,
               width: widthBorder - 60);
 
             IEnumerable<Paragraph> GetEighthLine()
-            {
-                List<string> texts = new List<string>() { ConstantText.TomeText, ConstantText.FolioText, ConstantText.BookText };
-                List<string> values = new List<string>() { certificate.Tomo, certificate.Folio, certificate.Book };
-                
-                yield return ReportHelper.GetParagraphWithSeparationForThree(
-                    texts, values, false, false, 50, 50, 
+            {                
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.TomeText, 
+                    certificate.Tomo, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
+
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.FolioText, 
+                    certificate.Folio, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 10, 
+                    TextAlignment.LEFT
+                );
+
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.BookText, 
+                    certificate.Book, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT

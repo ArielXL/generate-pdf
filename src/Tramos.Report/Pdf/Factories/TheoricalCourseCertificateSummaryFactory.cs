@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Tramos.Logic.Commands.Certificates
 {
-    public class SecondCertificateSummaryFactory
+    public class TheoricalCourseCertificateSummaryFactory
     {
         /// <summary>
         /// 
@@ -17,7 +17,7 @@ namespace Tramos.Logic.Commands.Certificates
         {
             try
             {
-                return await SecondCertificateSummary.TryGeneratePdf(certificates);
+                return await TheoricalCourseCertificateSummary.TryGeneratePdf(certificates);
             }
             catch (Exception ex)
             {
