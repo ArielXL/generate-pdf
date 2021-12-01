@@ -14,12 +14,11 @@ namespace Tramos.Report.Pdf
 {
     internal class TheoricalCourseCertificateSummary
     {
-        private const float heightBorder = 350;
-        private const float widthBorder = 700;
-
-        private const float left = 45;
-        private const float right = 40;
-        private const float bottom = 140;
+        private static float heightBorder;
+        private static float widthBorder;
+        private static float left;
+        // private static float right;
+        private static float bottom;
 
         private static PdfWriterManager _pdfWriter;
 
@@ -43,19 +42,34 @@ namespace Tramos.Report.Pdf
 
         private static void GenerateReport(Stream stream, IEnumerable<Certificate> certificates)
         {
-            _pdfWriter = new PdfWriterManager(stream, PageSize.LETTER.Rotate());
+            _pdfWriter = new PdfWriterManager(stream, PageSize.A3);
 
             List<Certificate> certificatesList = certificates.ToList();
             for(int i = 0; i < certificatesList.Count; i++)
             {
+                InitializeStaticField();
                 GenerateReportFirstPage(certificatesList[i]);
-                _pdfWriter.AddNewPage();
+                UpdateStaticField(-550);
                 GenerateReportSecondPage(certificatesList[i]);
                 if(i != certificatesList.Count - 1)
                     _pdfWriter.AddNewPage();
             }
 
             _pdfWriter.Close();
+        }
+
+        private static void InitializeStaticField()
+        {
+            heightBorder = 400;
+            widthBorder = 700;
+            left = 45;
+            // right = 40;
+            bottom = 660;
+        }
+
+        private static void UpdateStaticField(int displacement)
+        {
+            bottom += displacement;
         }
 
         private static void GenerateReportFirstPage(Certificate certificate)
