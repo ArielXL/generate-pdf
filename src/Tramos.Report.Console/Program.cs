@@ -55,7 +55,7 @@ namespace Tramos.Report.Test
 
             fileStream.Write(bytes, 0, bytes.Length);
             fileStream.Close();
-            Console.WriteLine("requalification course certificate pdf done!!!");
+            Console.WriteLine("psychophysiological exam carnet pdf done!!!");
         }
 
         private static List<Certificate> GetItemDynamics()
