@@ -64,6 +64,7 @@ namespace Tramos.Report.Test
             {
                 new Certificate
                 {
+                    NoIdentification = "123",
                     No = "1", 
                     SchoolOf = "Universidad de La Habana",
                     EvaluationType = "tipo de evaluacion",
@@ -101,6 +102,7 @@ namespace Tramos.Report.Test
                 },
                 new Certificate
                 {
+                    NoIdentification = "321",
                     No = "2",
                     ExperimentationNumber = "456",
                     ValidDate = DateTime.Now,

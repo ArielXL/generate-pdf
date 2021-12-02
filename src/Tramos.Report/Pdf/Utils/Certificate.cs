@@ -4,6 +4,9 @@ namespace Tramos.Report.Pdf.Utils
 {
     public class Certificate
     {
+        // corresponde con 'No. Identificacion' en 'Certificado del Curso de Recalificacion'
+        public string NoIdentification { get; set; }
+
         // corresponde con 'No.'
         public string No { get; set; }
 

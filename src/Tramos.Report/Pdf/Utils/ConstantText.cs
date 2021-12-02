@@ -62,7 +62,9 @@
         public const string PointsText = "Puntos: ";
         public const string ExaminerText = "Examinador: ";
         public const string TCPText = "T.C.P";
-        public const string IdentificationNumberText = "No. de Identificación";
+        public const string IdentificationNumberText = "No. de Identificación: ";
+        public const string IdentificationText = "Identificación";
+        public const string TeacherNameText = "Nombre del profesor";
         public const string ExperimentationNumberText = "No. Expediente: ";
         public const string CompleteEEVCText = "Para llenar por la E.E.V.C.:";
         public const string ValidDateText = "Fecha válido (un año natural): ";

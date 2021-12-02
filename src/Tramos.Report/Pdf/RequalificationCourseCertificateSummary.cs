@@ -307,19 +307,27 @@ namespace Tramos.Report.Pdf
             IEnumerable<Paragraph> GetFourthLine()
             {
                 yield return ReportHelper.GetTextParagraph(
-                    ConstantText.IdentificationNumberText, false, false, FontFactory.CreateFontText(), 10, TextAlignment.LEFT);
+                    ConstantText.TeacherNameText, false, false, FontFactory.CreateFontText(), 10, TextAlignment.LEFT);
             }
 
             IEnumerable<Paragraph> fifthLine = GetFifthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, fifthLine,
-              columns: 1,
+              columns: 2,
               x: left + 30,
               y: bottom + heightBorder - 335,
               width: widthBorder - 60);
 
             IEnumerable<Paragraph> GetFifthLine()
             {
+                yield return ReportHelper.GetParagraph(
+                    ConstantText.IdentificationNumberText, 
+                    certificate.NoIdentification, false, false, 
+                    FontFactory.CreateFontBoldText(), 
+                    FontFactory.CreateFontBoldText(), 
+                    10, TextAlignment.LEFT
+                );
+
                 yield return ReportHelper.GetParagraph(
                     ConstantText.ExperimentationNumberText, 
                     certificate.ExperimentationNumber, false, false, 
