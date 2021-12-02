@@ -48,6 +48,16 @@ namespace Tramos.Report.Test
             Console.WriteLine("requalification course certificate pdf done!!!");
         }
 
+        private static void GeneratePDFPsychophysiologicalExam(string path)
+        {
+            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            var bytes = new PsychophysiologicalExamFactory().Create(GetItemDynamics()).Result;
+
+            fileStream.Write(bytes, 0, bytes.Length);
+            fileStream.Close();
+            Console.WriteLine("requalification course certificate pdf done!!!");
+        }
+
         private static List<Certificate> GetItemDynamics()
         {
             return new List<Certificate>
@@ -135,6 +145,7 @@ namespace Tramos.Report.Test
             GeneratePDFPotentialAssessment("../../pdf/Resumen de Evaluacion.pdf");
             GeneratePDFTheoricalCourseCertificate("../../pdf/Certificado del Curso Teorico.pdf");
             GeneratePDFRequalificationCourseCertificate("../../pdf/Certificado del Curso de Recalificacion.pdf");
+            GeneratePDFPsychophysiologicalExam("../../pdf/Carnet de Examen Fisiologico.pdf");
         }
     }
 }
