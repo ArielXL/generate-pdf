@@ -342,3 +342,11 @@ healthchecksdb
 /src/Tramos.Api/Logs
 
 src/Tramos.Api/Files/Reports/Logs/
+
+src/Tramos.Report/bin/
+
+src/Tramos.Report/obj/
+
+src/Tramos.Report.Console/bin/
+
+src/Tramos.Report.Console/obj/
