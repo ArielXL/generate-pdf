@@ -85,16 +85,16 @@ namespace Tramos.Report.Pdf
                 switch (Positions[i])
                 {
                     case "TopLeft":
-                        WriteTableWithImage(pdfWriter, escudoImage, left + 11, top + heightBorder - 91, widthBorder - 21);
+                        WriteTableWithImage(certificates[i], pdfWriter, escudoImage, left + 11, top + heightBorder - 91, widthBorder - 21);
                         break;
                     case "TopRight":
-                        WriteTableWithImage(pdfWriter, escudoImage, right + 11, top + heightBorder - 91, widthBorder - 21);
+                        WriteTableWithImage(certificates[i], pdfWriter, escudoImage, right + 11, top + heightBorder - 91, widthBorder - 21);
                         break;
                     case "BottomLeft":
-                        WriteTableWithImage(pdfWriter, escudoImage, left + 11, bottom + heightBorder - 91, widthBorder - 21);
+                        WriteTableWithImage(certificates[i], pdfWriter, escudoImage, left + 11, bottom + heightBorder - 91, widthBorder - 21);
                         break;
                     case "BottomRight":
-                        WriteTableWithImage(pdfWriter, escudoImage, right + 11, bottom + heightBorder - 91, widthBorder - 21);
+                        WriteTableWithImage(certificates[i], pdfWriter, escudoImage, right + 11, bottom + heightBorder - 91, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -102,17 +102,17 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WriteTableWithImage(PdfWriterManager pdfWriter, Image escudoImage, float x, float y, float width)
+        private static void WriteTableWithImage(Certificate certificate, PdfWriterManager pdfWriter, Image escudoImage, float x, float y, float width)
         {
-            ReportHelper.WriteTableWithImage(pdfWriter, GetTextsStartDocument(), escudoImage, 7, x, y, width, FontFactory.CreateFontBoldText());
+            ReportHelper.WriteTableWithImage(pdfWriter, GetTextsStartDocument(certificate), escudoImage, 7, x, y, width, FontFactory.CreateFontBoldText());
         }
 
-        private static IEnumerable<string> GetTextsStartDocument()
+        private static IEnumerable<string> GetTextsStartDocument(Certificate certificate)
         {
             yield return ConstantText.MinistryText;
             yield return ConstantText.SchoolText;
             yield return ConstantText.ProvinciaText;
-            yield return ConstantText.CertificadoText;
+            yield return ConstantText.CertificadoText + "  " + certificate.No;
         }
 
         private static void WriteBorders(PdfWriterManager pdfWriter, IList<Certificate> certificates)

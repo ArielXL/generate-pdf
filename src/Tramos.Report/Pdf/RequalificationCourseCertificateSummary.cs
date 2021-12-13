@@ -295,27 +295,28 @@ namespace Tramos.Report.Pdf
                     lineWidth: 1);
             }
 
-            IEnumerable<Paragraph> fourthLine = GetFourthLine();
+            // IEnumerable<Paragraph> fourthLine = GetFourthLine();
 
-            int start = (certificate.Examiner.Length - ConstantText.IdentificationNumberText.Length) / 2;
-            ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
-              columns: 1,
-              x: (float)(left + 93 + (9.5 * start)),
-              y: bottom + heightBorder - 315,
-              width: widthBorder - 60);
+            // int start = (certificate.Examiner.Length - ConstantText.IdentificationNumberText.Length) / 2;
+            // Console.WriteLine($"start = {start}");
+            // ReportHelper.WriteDataTable(_pdfWriter, fourthLine,
+            //   columns: 1,
+            //   x: (float)(left + 93 + (9.5 * start)),
+            //   y: bottom + heightBorder - 315,
+            //   width: widthBorder - 60);
 
-            IEnumerable<Paragraph> GetFourthLine()
-            {
-                yield return ReportHelper.GetTextParagraph(
-                    ConstantText.TeacherNameText, false, false, FontFactory.CreateFontText(), 10, TextAlignment.LEFT);
-            }
+            // IEnumerable<Paragraph> GetFourthLine()
+            // {
+            //     yield return ReportHelper.GetTextParagraph(
+            //         ConstantText.TeacherNameText, false, false, FontFactory.CreateFontText(), 10, TextAlignment.LEFT);
+            // }
 
             IEnumerable<Paragraph> fifthLine = GetFifthLine();
 
             ReportHelper.WriteDataTable(_pdfWriter, fifthLine,
               columns: 2,
               x: left + 30,
-              y: bottom + heightBorder - 335,
+              y: bottom + heightBorder - 330,
               width: widthBorder - 60);
 
             IEnumerable<Paragraph> GetFifthLine()

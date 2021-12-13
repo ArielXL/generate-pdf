@@ -95,7 +95,7 @@ namespace Tramos.Report.Test
                     Points = "70",
                     ExpirationDateEEVC = DateTime.Now,
                     RecalificationCode = "1234567890",
-                    Examiner = "Mmmmmmmmmmmiguel Diaz Canel Bermudez",
+                    Examiner = "123456789",
                     ExperimentationNumber = "45",
                     MunicipalClassroom = "45",
                     ValidDate = DateTime.Now,
@@ -136,7 +136,7 @@ namespace Tramos.Report.Test
                     ExpirationDateEEVC = DateTime.Now,
                     MunicipalClassroom = "45",
                     RecalificationCode = "1234567890",
-                    Examiner = "Miguel Diaz Canel Bermudez"
+                    Examiner = " "
                 },
             };
         }
