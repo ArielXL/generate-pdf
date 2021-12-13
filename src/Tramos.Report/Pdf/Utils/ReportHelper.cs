@@ -48,12 +48,12 @@ namespace Tramos.Report.Pdf.Utils
             pdfWriter.AddTable(tableData);
         }
 
-        public static Paragraph GetTomoFolioParagraph(Certificate certificate, bool isUpper, int separation, PdfFont font, PdfFont fontBold, float fontSize, TextAlignment textAlignment)
+        public static Paragraph GetTomoFolioParagraph(PdfData pdfData, bool isUpper, int separation, PdfFont font, PdfFont fontBold, float fontSize, TextAlignment textAlignment)
         {
             var paragraph = ParagraphFactory.CreateEmpty(fontBold, fontSize, 1, textAlignment);
             var textTomo = isUpper ? ConstantText.TomoText.ToUpper() : ConstantText.TomoText;
             paragraph.Add(new Text($"{textTomo}   ")).SetFont(font);
-            paragraph.Add(new Text(certificate.Tomo.ToUpper()).SetFont(fontBold).SetItalic().SetUnderline());
+            paragraph.Add(new Text(pdfData.Tomo.ToUpper()).SetFont(fontBold).SetItalic().SetUnderline());
 
             var separator = string.Empty;
             for (int i = 0; i < separation; i++)
@@ -63,7 +63,7 @@ namespace Tramos.Report.Pdf.Utils
             paragraph.Add(new Text(separator));
             var textFolio = isUpper ? ConstantText.FolioText.ToUpper() : ConstantText.FolioText;
             paragraph.Add(new Text($"{textFolio}   ")).SetFont(font);
-            paragraph.Add(new Text(certificate.Folio.ToUpper()).SetFont(fontBold).SetItalic().SetUnderline());
+            paragraph.Add(new Text(pdfData.Folio.ToUpper()).SetFont(fontBold).SetItalic().SetUnderline());
 
             return paragraph;
         }

@@ -27,13 +27,13 @@ namespace Tramos.Report.Pdf
 
         private const string escudoImagePath = "Tramos.Report.Pdf.AssemblyResources.escudo.png";
 
-        public static Task<byte[]> TryGenerateReport(IEnumerable<Certificate> certificates)
+        public static Task<byte[]> TryGenerateReport(IEnumerable<PdfData> pdfData)
         {
             try
             {
                 var stream = new MemoryStream();
 
-                GenerateReport(stream, certificates);
+                GenerateReport(stream, pdfData);
 
                 stream.Close();
                 return Task.FromResult(stream.ToArray());
@@ -45,7 +45,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void GenerateReport(Stream stream, IEnumerable<Certificate> certificates)
+        private static void GenerateReport(Stream stream, IEnumerable<PdfData> pdfData)
         {
             //var s = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             var escudoImageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(escudoImagePath);
@@ -54,21 +54,21 @@ namespace Tramos.Report.Pdf
             var pdfWriter = new PdfWriterManager(stream, PageSize.LETTER.Rotate());
             pdfWriter.AddMargin(1, 1, 1, 1);
 
-            WritePage(pdfWriter, certificates, 0, countItemByPage, escudoImage);
+            WritePage(pdfWriter, pdfData, 0, countItemByPage, escudoImage);
 
-            for (int i = countItemByPage; i < certificates.Count(); i += countItemByPage)
+            for (int i = countItemByPage; i < pdfData.Count(); i += countItemByPage)
             {
                 pdfWriter.AddNewPage();
-                WritePage(pdfWriter, certificates, i, countItemByPage, escudoImage);
+                WritePage(pdfWriter, pdfData, i, countItemByPage, escudoImage);
             }
 
             pdfWriter.Close();
         }
 
-        private static void WritePage(PdfWriterManager pdfWriter, IEnumerable<Certificate> certificates,
+        private static void WritePage(PdfWriterManager pdfWriter, IEnumerable<PdfData> pdfData,
             int startIndex, int countItemByPage, Image escudoImage)
         {
-            List<Certificate> list = certificates
+            List<PdfData> list = pdfData
                         .Skip(startIndex)
                         .Take(countItemByPage)
                         .ToList();
@@ -78,28 +78,28 @@ namespace Tramos.Report.Pdf
             WriteBottomDocumentPage(pdfWriter, list, escudoImage);
         }
 
-        private static void WriteTopDocumentPage(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteTopDocumentPage(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            WriteHeaderEEVCInfo(pdfWriter, certificates);
-            WriteEEVCInfo(pdfWriter, certificates);
-            WriteNoteText(pdfWriter, certificates);
-            WriteFirmasText(pdfWriter, certificates);
+            WriteHeaderEEVCInfo(pdfWriter, pdfData);
+            WriteEEVCInfo(pdfWriter, pdfData);
+            WriteNoteText(pdfWriter, pdfData);
+            WriteFirmasText(pdfWriter, pdfData);
         }
 
-        private static void WriteBottomDocumentPage(PdfWriterManager pdfWriter, IList<Certificate> certificates, Image escudoImage)
+        private static void WriteBottomDocumentPage(PdfWriterManager pdfWriter, IList<PdfData> pdfData, Image escudoImage)
         {
-            WriteImagesPage(pdfWriter, certificates, escudoImage);
-            WriteCertificadoNo(pdfWriter, certificates);
-            WriteNamePerson(pdfWriter, certificates);
-            WriteIdentifyData(pdfWriter, certificates);
-            WritePosition(pdfWriter, certificates);
-            WriteInfoText(pdfWriter, certificates);
-            WriteRestDataText(pdfWriter, certificates);
+            WriteImagesPage(pdfWriter, pdfData, escudoImage);
+            WriteCertificadoNo(pdfWriter, pdfData);
+            WriteNamePerson(pdfWriter, pdfData);
+            WriteIdentifyData(pdfWriter, pdfData);
+            WritePosition(pdfWriter, pdfData);
+            WriteInfoText(pdfWriter, pdfData);
+            WriteRestDataText(pdfWriter, pdfData);
         }
 
-        private static void WriteImagesPage(PdfWriterManager pdfWriter, IList<Certificate> certificates, Image escudoImage)
+        private static void WriteImagesPage(PdfWriterManager pdfWriter, IList<PdfData> pdfData, Image escudoImage)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -126,9 +126,9 @@ namespace Tramos.Report.Pdf
             yield return ConstantText.EscuelaText;
         }
 
-        private static void WriteBorders(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteBorders(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -161,9 +161,9 @@ namespace Tramos.Report.Pdf
             pdfWriter.Stroke();
         }
 
-        private static void WriteCertificadoNo(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteCertificadoNo(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -184,17 +184,17 @@ namespace Tramos.Report.Pdf
             yield return ReportHelper.GetTextParagraph(ConstantText.CertificadoText, false, false, FontFactory.CreateFontText(), 8, TextAlignment.LEFT);
         }
 
-        private static void WriteNamePerson(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteNamePerson(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetNameParagraphs(certificates[i]), 3, left + 11, bottom + heightBorder / 2 - 105, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetNameParagraphs(pdfData[i]), 3, left + 11, bottom + heightBorder / 2 - 105, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetNameParagraphs(certificates[i]), 3, right + 11, bottom + heightBorder / 2 - 105, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetNameParagraphs(pdfData[i]), 3, right + 11, bottom + heightBorder / 2 - 105, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -202,28 +202,28 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static IEnumerable<Paragraph> GetNameParagraphs(Certificate certificate)
+        private static IEnumerable<Paragraph> GetNameParagraphs(PdfData pdfData)
         {
-            yield return ReportHelper.GetTextParagraph(certificate.Name, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(certificate.FirstLastName, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(certificate.SecondLastName, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            yield return ReportHelper.GetTextParagraph(pdfData.Name, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            yield return ReportHelper.GetTextParagraph(pdfData.FirstLastName, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            yield return ReportHelper.GetTextParagraph(pdfData.SecondLastName, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
 
             yield return ReportHelper.GetTextParagraph(ConstantText.NombreHeaderText, false, false, FontFactory.CreateFontText(), 8, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.PrimerApellidoHeaderText, false, false, FontFactory.CreateFontText(), 8, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.SegundoApellidoHeaderText, false, false, FontFactory.CreateFontText(), 8, TextAlignment.CENTER);
         }
 
-        private static void WriteIdentifyData(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteIdentifyData(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetIdentityParagraphs(certificates[i]), 3, left + 11, bottom + heightBorder / 2 - 120, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetIdentityParagraphs(pdfData[i]), 3, left + 11, bottom + heightBorder / 2 - 120, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetIdentityParagraphs(certificates[i]), 3, right + 11, bottom + heightBorder / 2 - 120, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetIdentityParagraphs(pdfData[i]), 3, right + 11, bottom + heightBorder / 2 - 120, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -231,16 +231,16 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static IEnumerable<Paragraph> GetIdentityParagraphs(Certificate certificate)
+        private static IEnumerable<Paragraph> GetIdentityParagraphs(PdfData pdfData)
         {
-            yield return ReportHelper.GetParagraph(ConstantText.EdadText, certificate.Age, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
-            yield return ReportHelper.GetParagraph(ConstantText.CanetIdentidadText, certificate.IdentityCard, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
-            yield return ReportHelper.GetParagraph(ConstantText.LicenciaConducionText, certificate.CardDriver, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
+            yield return ReportHelper.GetParagraph(ConstantText.EdadText, pdfData.Age, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
+            yield return ReportHelper.GetParagraph(ConstantText.CanetIdentidadText, pdfData.IdentityCard, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
+            yield return ReportHelper.GetParagraph(ConstantText.LicenciaConducionText, pdfData.CardDriver, true, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 8, TextAlignment.CENTER);
         }
 
-        private static void WritePosition(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WritePosition(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -267,9 +267,9 @@ namespace Tramos.Report.Pdf
                     TextAlignment.LEFT);
         }
 
-        private static void WriteInfoText(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteInfoText(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -297,17 +297,17 @@ namespace Tramos.Report.Pdf
                 TextAlignment.LEFT);
         }
 
-        private static void WriteRestDataText(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteRestDataText(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetRestDataParagraphs(certificates[i]), 2, left + 11, bottom + heightBorder / 2 - 174, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetRestDataParagraphs(pdfData[i]), 2, left + 11, bottom + heightBorder / 2 - 174, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetRestDataParagraphs(certificates[i]), 2, right + 11, bottom + heightBorder / 2 - 174, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetRestDataParagraphs(pdfData[i]), 2, right + 11, bottom + heightBorder / 2 - 174, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -315,25 +315,25 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static IEnumerable<Paragraph> GetRestDataParagraphs(Certificate certificate)
+        private static IEnumerable<Paragraph> GetRestDataParagraphs(PdfData pdfData)
         {
             yield return ReportHelper.GetTomoFolioParagraph(
-                certificate, true, 4,
+                pdfData, true, 4,
                 FontFactory.CreateFontText(),
                 FontFactory.CreateFontBoldText(),
                 8, TextAlignment.LEFT);
 
             yield return ReportHelper.GetParagraph(
                 ConstantText.FechaExpedidoText,
-                certificate.ExpidetionDate.ToString("dd/MM/yy"), true, true, 
+                pdfData.ExpidetionDate.ToString("dd/MM/yy"), true, true, 
                 FontFactory.CreateFontText(),
                 FontFactory.CreateFontBoldText(),
                 8, TextAlignment.RIGHT);
         }
 
-        private static void WriteHeaderEEVCInfo(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteHeaderEEVCInfo(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
@@ -355,23 +355,23 @@ namespace Tramos.Report.Pdf
             yield return ReportHelper.GetTextParagraph(ConstantText.DatosDeLaEEVCText, true, false, FontFactory.CreateFontBoldText(), 10, TextAlignment.CENTER);
         }
 
-        private static void WriteEEVCInfo(PdfWriterManager pdfWriter, IList<Certificate> certificates)
+        private static void WriteEEVCInfo(PdfWriterManager pdfWriter, IList<PdfData> pdfData)
         {
-            // GetEEVCInfoParagraphs(certificates[0]);
-            // for(int i = 0; i < certificates.Count; i++)
+            // GetEEVCInfoParagraphs(pdfData[0]);
+            // for(int i = 0; i < pdfData.Count; i++)
             // {
-            //     GetEEVCInfoParagraphs(certificates[i]);
+            //     GetEEVCInfoParagraphs(pdfData[i]);
             // }
 
-            for (int i = 0; i < certificates.Count && i < 2; i++)
+            for (int i = 0; i < pdfData.Count && i < 2; i++)
             {
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 2, left + 11, bottom + heightBorder - 92, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(pdfData[i]), 2, left + 11, bottom + heightBorder - 92, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 2, right + 11, bottom + heightBorder - 92, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(pdfData[i]), 2, right + 11, bottom + heightBorder - 92, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -379,7 +379,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static IEnumerable<Paragraph> GetEEVCInfoParagraphs(Certificate certificate)
+        private static IEnumerable<Paragraph> GetEEVCInfoParagraphs(PdfData pdfData)
         {
             // string direccion = "DIVISION LOGISTICA CADENA TIENDAS CARIBE";
             // string direccion1 = "DIVISION LOGISTICA CADENA";
@@ -388,24 +388,24 @@ namespace Tramos.Report.Pdf
             // Console.WriteLine(direccion1.Length);
             // Console.WriteLine(aula.Length);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCProvincialText, certificate.ProvincialEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            // yield return ReportHelper.GetParagraph(ConstantText.EEVCProvincialText, pdfData.ProvincialEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.EEVCProvincialText, true, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ProvincialEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetTextParagraph(pdfData.ProvincialEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCDirreccionText, certificate.AddressEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            // yield return ReportHelper.GetParagraph(ConstantText.EEVCDirreccionText, pdfData.AddressEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.EEVCDirreccionText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.AddressEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetTextParagraph(pdfData.AddressEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCAulaText, certificate.ClassroomEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            // yield return ReportHelper.GetParagraph(ConstantText.EEVCAulaText, pdfData.ClassroomEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.EEVCAulaText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ClassroomEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetTextParagraph(pdfData.ClassroomEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCFechaVencimientoText, certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
+            // yield return ReportHelper.GetParagraph(ConstantText.EEVCFechaVencimientoText, pdfData.ExpirationDateEEVC.ToString("dd/MM/yy"), false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
             yield return ReportHelper.GetTextParagraph(ConstantText.EEVCFechaVencimientoText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetTextParagraph(pdfData.ExpirationDateEEVC.ToString("dd/MM/yy"), true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
         }
 
-        private static void WriteNoteText(PdfWriterManager pdfWriter, IList<Certificate> people)
+        private static void WriteNoteText(PdfWriterManager pdfWriter, IList<PdfData> people)
         {
             for (int i = 0; i < people.Count && i < 2; i++)
             {
@@ -428,7 +428,7 @@ namespace Tramos.Report.Pdf
             yield return ReportHelper.GetTextParagraph(ConstantText.DatosText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.LEFT);
         }
 
-        private static void WriteFirmasText(PdfWriterManager pdfWriter, IList<Certificate> people)
+        private static void WriteFirmasText(PdfWriterManager pdfWriter, IList<PdfData> people)
         {
             for (int i = 0; i < people.Count && i < 2; i++)
             {

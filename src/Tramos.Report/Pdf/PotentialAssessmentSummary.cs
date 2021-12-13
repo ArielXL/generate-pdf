@@ -23,13 +23,13 @@ namespace Tramos.Report.Pdf
 
         private static PdfWriterManager _pdfWriter;
 
-        internal static Task<byte[]> TryGeneratePdf(IEnumerable<Certificate> certificates)
+        internal static Task<byte[]> TryGeneratePdf(IEnumerable<PdfData> pdfData)
         {
             try
             {
                 var stream = new MemoryStream();
 
-                GenerateReport(stream, certificates);
+                GenerateReport(stream, pdfData);
 
                 stream.Close();
                 return Task.FromResult(stream.ToArray());
@@ -41,11 +41,11 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void GenerateReport(Stream stream, IEnumerable<Certificate> certificates)
+        private static void GenerateReport(Stream stream, IEnumerable<PdfData> pdfData)
         {
             _pdfWriter = new PdfWriterManager(stream, PageSize.A3);
             
-            List<Certificate> certificatesList = certificates.ToList();
+            List<PdfData> certificatesList = pdfData.ToList();
             for(int i = 0; i < certificatesList.Count; i++)
             {
                 InitializeStaticField();
@@ -73,7 +73,7 @@ namespace Tramos.Report.Pdf
             bottom += displacement;
         }
 
-        private static void GenerateReportFirstPage(Certificate certificate)
+        private static void GenerateReportFirstPage(PdfData pdfData)
         {
             WriteBorders(
                rectangleLeft: left,
@@ -84,7 +84,7 @@ namespace Tramos.Report.Pdf
 
             WriteImages(left + 5, bottom + 335, 50);
 
-            WriteHeadersFirstPage(certificate);
+            WriteHeadersFirstPage(pdfData);
 
             WriteBorders(
                rectangleLeft: left + 10,
@@ -93,7 +93,7 @@ namespace Tramos.Report.Pdf
                rectangleBottom: 35,
                lineWidth: (float)0.25);
 
-            WriteSchoolInfoFirstPage(certificate);
+            WriteSchoolInfoFirstPage(pdfData);
 
             WriteBorders(
                rectangleLeft: left + 10,
@@ -102,7 +102,7 @@ namespace Tramos.Report.Pdf
                rectangleBottom: 50,
                lineWidth: (float)0.25);
 
-            WriteEvaluationInfoFirstPage(certificate);
+            WriteEvaluationInfoFirstPage(pdfData);
 
             WriteBorders(
                rectangleLeft: left + 10,
@@ -111,10 +111,10 @@ namespace Tramos.Report.Pdf
                rectangleBottom: 115,
                lineWidth: (float)0.25);
 
-            WritePersonalInfoFirstPage(certificate);
+            WritePersonalInfoFirstPage(pdfData);
         }
 
-        private static void GenerateReportSecondPage(Certificate certificate)
+        private static void GenerateReportSecondPage(PdfData pdfData)
         {
             WriteBorders(
                rectangleLeft: left,
@@ -123,16 +123,16 @@ namespace Tramos.Report.Pdf
                rectangleBottom: heightBorder,
                lineWidth: 3);
             
-            WriteHeadersSecondPage(certificate);
+            WriteHeadersSecondPage(pdfData);
 
             int height = 120;
             for(int i = 0; i < 12; i++)
             {
-                WriteLineSecondPage(certificate, height);
+                WriteLineSecondPage(pdfData, height);
                 height += 20;
             }
 
-            WriteFooterSecondPage(certificate);
+            WriteFooterSecondPage(pdfData);
         }
 
         private static void WriteBorders(float rectangleLeft, float rectangleTop, float rectangleRight, float rectangleBottom, float lineWidth)
@@ -152,7 +152,7 @@ namespace Tramos.Report.Pdf
             ReportHelper.WriteTableWithImage(_pdfWriter, new List<string>(), image, 7, x, y, width, FontFactory.CreateFontBoldText());
         }
 
-        private static void WriteHeadersFirstPage(Certificate certificate)
+        private static void WriteHeadersFirstPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> header1 = GetHeader1();
 
@@ -185,7 +185,7 @@ namespace Tramos.Report.Pdf
                     ConstantText.NumberPlusStripText, false, false, FontFactory.CreateFontText(), 11, TextAlignment.RIGHT);
 
                 yield return ReportHelper.GetTextParagraph(
-                    certificate.No, false, true, FontFactory.CreateFontText(), 11, TextAlignment.LEFT);
+                    pdfData.No, false, true, FontFactory.CreateFontText(), 11, TextAlignment.LEFT);
             }
 
             IEnumerable<Paragraph> header3 = GetHeader3();
@@ -206,7 +206,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WriteSchoolInfoFirstPage(Certificate certificate)
+        private static void WriteSchoolInfoFirstPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> paragraphs = GetSchoolnfoParagraphs();
 
@@ -220,14 +220,14 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.SchoolOfText,
-                    certificate.SchoolOf, false, false,
+                    pdfData.SchoolOf, false, false,
                     FontFactory.CreateFontBoldText(),
                     FontFactory.CreateFontBoldText(),
                     10, TextAlignment.LEFT);
             }
         }
 
-        private static void WriteEvaluationInfoFirstPage(Certificate certificate)
+        private static void WriteEvaluationInfoFirstPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> firstParagraph = GetEvaluationInfoFirstParagraph();
 
@@ -241,7 +241,7 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.DispatcherDateText,
-                    certificate.ExpidetionDate.ToString("dd/MM/yy"), false, false,
+                    pdfData.ExpidetionDate.ToString("dd/MM/yy"), false, false,
                     FontFactory.CreateFontBoldText(),
                     FontFactory.CreateFontBoldText(),
                     10, TextAlignment.LEFT);
@@ -259,7 +259,7 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.EvaluationTypeText, 
-                    certificate.EvaluationType, false, false, 
+                    pdfData.EvaluationType, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
@@ -267,7 +267,7 @@ namespace Tramos.Report.Pdf
 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.NextEvaluationText, 
-                    certificate.NextEvaluation, false, false, 
+                    pdfData.NextEvaluation, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
@@ -275,7 +275,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WritePersonalInfoFirstPage(Certificate certificate)
+        private static void WritePersonalInfoFirstPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> firstLine = GePersonalInfoFirstLine();
 
@@ -289,7 +289,7 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.NumberNumberplateText, 
-                    certificate.NumberNumberplate, false, false, 
+                    pdfData.NumberNumberplate, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
@@ -297,7 +297,7 @@ namespace Tramos.Report.Pdf
 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.TomeText, 
-                    certificate.Tomo, false, false, 
+                    pdfData.Tomo, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
@@ -305,7 +305,7 @@ namespace Tramos.Report.Pdf
 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.FolioText, 
-                    certificate.Folio, false, false, 
+                    pdfData.Folio, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, 
                     TextAlignment.LEFT
@@ -322,7 +322,7 @@ namespace Tramos.Report.Pdf
 
             IEnumerable<Paragraph> GePersonalInfoSecondLine()
             {
-                string fullName = $"{certificate.Name} {certificate.FirstLastName} {certificate.SecondLastName}";
+                string fullName = $"{pdfData.Name} {pdfData.FirstLastName} {pdfData.SecondLastName}";
                 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.NameLastNameStudentText, fullName, 
@@ -331,7 +331,7 @@ namespace Tramos.Report.Pdf
                 );
 
                 yield return ReportHelper.GetParagraph(
-                    ConstantText.AgeText, certificate.Age, 
+                    ConstantText.AgeText, pdfData.Age, 
                     false, false, FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 10, TextAlignment.CENTER
                 );
@@ -349,7 +349,7 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.IdentificationNumberText, 
-                    certificate.IdentityCard, false, false, 
+                    pdfData.IdentityCard, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 
                     10, TextAlignment.LEFT
@@ -357,7 +357,7 @@ namespace Tramos.Report.Pdf
 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.DrivingLicenseText, 
-                    certificate.CardDriver, false, false, 
+                    pdfData.CardDriver, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 
                     10, TextAlignment.LEFT
@@ -376,7 +376,7 @@ namespace Tramos.Report.Pdf
             {
                 yield return ReportHelper.GetParagraph(
                     ConstantText.WorkCenterText, 
-                    certificate.WorkCenter, false, false, 
+                    pdfData.WorkCenter, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 
                     10, TextAlignment.LEFT
@@ -384,7 +384,7 @@ namespace Tramos.Report.Pdf
 
                 yield return ReportHelper.GetParagraph(
                     ConstantText.DrivingVehicleText, 
-                    certificate.DrivingVehicle, false, false, 
+                    pdfData.DrivingVehicle, false, false, 
                     FontFactory.CreateFontBoldText(), 
                     FontFactory.CreateFontBoldText(), 
                     10, TextAlignment.LEFT
@@ -392,7 +392,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WriteHeadersSecondPage(Certificate certificate)
+        private static void WriteHeadersSecondPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> header1 = GetHeader1();
 
@@ -426,7 +426,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WriteLineSecondPage(Certificate certificate, int height)
+        private static void WriteLineSecondPage(PdfData pdfData, int height)
         {
             IEnumerable<Paragraph> paragraphs = GetLinesParagraphs();
 
@@ -443,7 +443,7 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static void WriteFooterSecondPage(Certificate certificate)
+        private static void WriteFooterSecondPage(PdfData pdfData)
         {
             IEnumerable<Paragraph> firstLine = GePersonalInfoFirstLine();
 

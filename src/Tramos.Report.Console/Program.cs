@@ -58,11 +58,11 @@ namespace Tramos.Report.Test
             Console.WriteLine("psychophysiological exam carnet pdf done!!!");
         }
 
-        private static List<Certificate> GetItemDynamics()
+        private static List<PdfData> GetItemDynamics()
         {
-            return new List<Certificate>
+            return new List<PdfData>
             {
-                new Certificate
+                new PdfData
                 {
                     NoIdentification = "123",
                     No = "1", 
@@ -100,7 +100,7 @@ namespace Tramos.Report.Test
                     MunicipalClassroom = "45",
                     ValidDate = DateTime.Now,
                 },
-                new Certificate
+                new PdfData
                 {
                     NoIdentification = "321",
                     No = "2",
