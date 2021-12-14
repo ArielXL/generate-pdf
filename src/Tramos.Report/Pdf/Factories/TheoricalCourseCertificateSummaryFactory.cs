@@ -13,7 +13,7 @@ namespace Tramos.Logic.Commands.Certificates
         /// </summary>
         /// <param name="certificates"></param>
         /// <returns></returns>
-        public async Task<byte[]> Create(IEnumerable<Certificate> certificates)
+        public async Task<byte[]> Create(IEnumerable<PdfData> certificates)
         {
             try
             {
