@@ -110,6 +110,23 @@ namespace Tramos.Report.Pdf.Utils
             return paragraph;
         }
 
+        public static Paragraph GetParagraphWhitoutUnderline(string text, string value, bool isUpperText, bool isUpperValue, PdfFont font, PdfFont fontBold, float fontSize, TextAlignment textAlignment)
+        {
+            var paragraph = ParagraphFactory.CreateEmpty(fontBold, fontSize, 1, textAlignment);
+            text = isUpperText ? text.ToUpper() : text;
+            paragraph.Add(
+                new Text($"{text} "))
+                .SetFont(font);
+
+            value = isUpperValue ? value.ToUpper() : value;
+            paragraph.Add(
+                new Text(value)
+                .SetFont(fontBold)
+                .SetItalic());
+
+            return paragraph;
+        }
+
         public static Paragraph GetTextParagraph(string text, bool isUpper, bool isUnderline, PdfFont font, float fontSize, TextAlignment textAlignment)
         {
             Paragraph paragraph = ParagraphFactory.CreateEmpty(font, fontSize, 1, textAlignment);

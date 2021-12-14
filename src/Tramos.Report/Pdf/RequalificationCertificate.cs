@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 using System.Linq;
 using iText.Kernel.Geom;
@@ -168,10 +168,10 @@ namespace Tramos.Report.Pdf
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetCertificadoNoParagraphs(), 1, left + 11, bottom + heightBorder / 2 - 75, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetCertificadoNoParagraphs(certificates[i]), 1, left + 11, bottom + heightBorder / 2 - 75, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetCertificadoNoParagraphs(), 1, right + 11, bottom + heightBorder / 2 - 75, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetCertificadoNoParagraphs(certificates[i]), 1, right + 11, bottom + heightBorder / 2 - 75, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -179,9 +179,9 @@ namespace Tramos.Report.Pdf
             }
         }
 
-        private static IEnumerable<Paragraph> GetCertificadoNoParagraphs()
+        private static IEnumerable<Paragraph> GetCertificadoNoParagraphs(Certificate certificate)
         {
-            yield return ReportHelper.GetTextParagraph(ConstantText.CertificadoText, false, false, FontFactory.CreateFontText(), 8, TextAlignment.LEFT);
+            yield return ReportHelper.GetTextParagraph(ConstantText.CertificadoText + "  " + certificate.No, false, false, FontFactory.CreateFontText(), 8, TextAlignment.CENTER);
         }
 
         private static void WriteNamePerson(PdfWriterManager pdfWriter, IList<Certificate> certificates)
@@ -357,21 +357,15 @@ namespace Tramos.Report.Pdf
 
         private static void WriteEEVCInfo(PdfWriterManager pdfWriter, IList<Certificate> certificates)
         {
-            // GetEEVCInfoParagraphs(certificates[0]);
-            // for(int i = 0; i < certificates.Count; i++)
-            // {
-            //     GetEEVCInfoParagraphs(certificates[i]);
-            // }
-
             for (int i = 0; i < certificates.Count && i < 2; i++)
-            {
+            {           
                 switch (Positions[i])
                 {
                     case "Left":
-                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 2, left + 11, bottom + heightBorder - 92, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 1, left + 11, bottom + heightBorder - 92, widthBorder - 21);
                         break;
                     case "Right":
-                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 2, right + 11, bottom + heightBorder - 92, widthBorder - 21);
+                        ReportHelper.WriteDataTable(pdfWriter, GetEEVCInfoParagraphs(certificates[i]), 1, right + 11, bottom + heightBorder - 92, widthBorder - 21);
                         break;
                     default:
                         break;
@@ -381,28 +375,45 @@ namespace Tramos.Report.Pdf
 
         private static IEnumerable<Paragraph> GetEEVCInfoParagraphs(Certificate certificate)
         {
-            // string direccion = "DIVISION LOGISTICA CADENA TIENDAS CARIBE";
-            // string direccion1 = "DIVISION LOGISTICA CADENA";
-            // string aula = "AULA DIVISION LOGISTICA CT CARIBE";
-            // Console.WriteLine(direccion.Length);
-            // Console.WriteLine(direccion1.Length);
-            // Console.WriteLine(aula.Length);
+            yield return ReportHelper.GetParagraphWhitoutUnderline(
+                ConstantText.EEVCProvincialText, 
+                certificate.ProvincialEEVC, false, false, 
+                FontFactory.CreateFontBoldText(), 
+                FontFactory.CreateFontBoldText(), 9, 
+                TextAlignment.CENTER
+            );
+            // yield return ReportHelper.GetTextParagraph(ConstantText.EEVCProvincialText, true, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
+            // yield return ReportHelper.GetTextParagraph(certificate.ProvincialEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCProvincialText, certificate.ProvincialEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(ConstantText.EEVCProvincialText, true, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ProvincialEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetParagraphWhitoutUnderline(
+                ConstantText.EEVCDirreccionText, 
+                certificate.AddressEEVC, false, false, 
+                FontFactory.CreateFontBoldText(), 
+                FontFactory.CreateFontBoldText(), 9, 
+                TextAlignment.CENTER
+            );
+            // yield return ReportHelper.GetTextParagraph(ConstantText.EEVCDirreccionText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
+            // yield return ReportHelper.GetTextParagraph(certificate.AddressEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCDirreccionText, certificate.AddressEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(ConstantText.EEVCDirreccionText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.AddressEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetParagraphWhitoutUnderline(
+                ConstantText.EEVCAulaText, 
+                certificate.ClassroomEEVC, false, false, 
+                FontFactory.CreateFontBoldText(), 
+                FontFactory.CreateFontBoldText(), 9, 
+                TextAlignment.CENTER
+            );
+            // yield return ReportHelper.GetTextParagraph(ConstantText.EEVCAulaText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
+            // yield return ReportHelper.GetTextParagraph(certificate.ClassroomEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
 
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCAulaText, certificate.ClassroomEEVC, false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(ConstantText.EEVCAulaText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ClassroomEEVC, true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
-
-            // yield return ReportHelper.GetParagraph(ConstantText.EEVCFechaVencimientoText, certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), false, true, FontFactory.CreateFontText(), FontFactory.CreateFontBoldText(), 9, TextAlignment.CENTER);
-            yield return ReportHelper.GetTextParagraph(ConstantText.EEVCFechaVencimientoText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
-            yield return ReportHelper.GetTextParagraph(certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
+            yield return ReportHelper.GetParagraphWhitoutUnderline(
+                ConstantText.EEVCFechaVencimientoText, 
+                certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), false, false, 
+                FontFactory.CreateFontBoldText(), 
+                FontFactory.CreateFontBoldText(), 9, 
+                TextAlignment.CENTER
+            );
+            // yield return ReportHelper.GetTextParagraph(ConstantText.EEVCFechaVencimientoText, false, false, FontFactory.CreateFontText(), 9, TextAlignment.RIGHT);
+            // yield return ReportHelper.GetTextParagraph(certificate.ExpirationDateEEVC.ToString("dd/MM/yy"), true, true, FontFactory.CreateFontBoldText(), 9, TextAlignment.LEFT);
         }
 
         private static void WriteNoteText(PdfWriterManager pdfWriter, IList<Certificate> people)
